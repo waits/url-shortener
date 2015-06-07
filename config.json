@@ -1,0 +1,4 @@
+{
+	"root_behavior": "redirect",
+	"root_location": "http://example.com"
+}
