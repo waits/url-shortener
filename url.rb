@@ -17,7 +17,7 @@ post '/' do
 	  while redis.get("url:#{key}") do key = SecureRandom::urlsafe_base64(4) end
 	  redis.set("url:#{key}", value, :ex => expires)
 	  short_url = "#{request.scheme}://#{request.host_with_port}/#{key}"
-	  [200, {'Content-Type' => 'application/json', 'Location' => short_url}, {:id => key, :expires => expires}.to_json]
+	  [303, {'Location' => short_url}, '']
 	else
 		puts "Invalid URL: \"#{value}\""
 		halt 422, {'Content-Type' => 'text/plain'}, 'Invalid URL'
