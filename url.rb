@@ -9,7 +9,7 @@ json = file.read
 config = JSON.parse json
 
 post '/' do
-	key = SecureRandom::urlsafe_base64(4)
+	key = SecureRandom::urlsafe_base64(5)
 	json = JSON.parse request.body.read
 	value = json['url']
 	expires = if json.has_key? 'expires' and json['expires'] < 2592000 then json['expires'] else 2592000 end
