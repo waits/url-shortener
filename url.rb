@@ -13,7 +13,7 @@ post '/' do
 	json = JSON.parse request.body.read
 	value = json['url']
 	expires = if json.has_key? 'expires' and json['expires'] < 2592000 then json['expires'] else 2592000 end
-	if value =~ /^https?:\/\/([a-z0-9-]+\.)+[a-z]{2,}(\/([a-zA-Z0-9-_]+(\.[a-z]+)?)?)*\??([a-z0-9_]+(=[a-z0-9_]*)?&?)*$/i
+	if value =~ %r@https?://(-\.)?([^\s/?\.#-]+\.?)+(/[^\s]*)?$@i
 	  while redis.get("url:#{key}") do key = SecureRandom::urlsafe_base64(5) end
 	  redis.set("url:#{key}", value, :ex => expires)
 	  short_url = "#{request.scheme}://#{request.host_with_port}/#{key}"
